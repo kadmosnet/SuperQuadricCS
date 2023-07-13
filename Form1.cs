@@ -17,8 +17,8 @@ namespace SuperQuadricCS
 
         private bool OnRotate = false;
         private bool mousedown = false;
-        private System.Drawing.Point point1 = System.Drawing.Point.Empty;
-        private System.Drawing.Point point2 = System.Drawing.Point.Empty;
+       
+        private Vector2 orbitPointStart = Vector2.Zero;
         private readonly char decimalSeparetor = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator.ToCharArray()[0];
         public Form1()
         {
@@ -26,7 +26,7 @@ namespace SuperQuadricCS
         }
 
         private double rxg, ryg, rzg, a1, a2, a3, eps1, eps2, eta, omega;
-        private int  num, r, p, j, k, v1, v2, va1, va2;
+        private int num, r, p, j, k, v1, v2, va1, va2;
         private short color;
 
         private void Button14_Click(object sender, EventArgs e)
@@ -55,7 +55,7 @@ namespace SuperQuadricCS
         private void Button16_Click(object sender, EventArgs e)
         {
             {
-                
+
                 SaveFileDialog1.DefaultExt = "jpg";
                 SaveFileDialog1.Filter = "JPEG (*.jpg)|*.jpg|PNG (*.png)|*.png|BMP (*.bmp)|*.bmp";
 
@@ -92,7 +92,7 @@ namespace SuperQuadricCS
         private void Button15_Click(object sender, EventArgs e)
         {
             {
-                
+
                 dxfReaderNETControl1.NewDrawing();
                 color = 1;
                 r = 15;
@@ -105,7 +105,7 @@ namespace SuperQuadricCS
                 Center.X = 0;
                 Center.Y = 0;
                 Center.Z = 0;
-                
+
                 a1 = 20;
                 a2 = 20;
                 a3 = 20;
@@ -130,7 +130,7 @@ namespace SuperQuadricCS
                 }
 
                 DisplayView(PredefinedViewType.SW_Isometric);
-              
+
             }
         }
 
@@ -148,12 +148,14 @@ namespace SuperQuadricCS
             Center.X = Convert.ToDouble(TextBoxCenterX.Text);
             Center.Y = Convert.ToDouble(TextBoxCenterY.Text);
             Center.Z = Convert.ToDouble(TextBoxCenterZ.Text);
-            
+
             a1 = Convert.ToDouble(TextBoxRadiusX.Text);
             a2 = Convert.ToDouble(TextBoxRadiusY.Text);
             a3 = Convert.ToDouble(TextBoxRadiusZ.Text);
+           
             color = Convert.ToInt16(TextBoxColor.Text);
             GenerateSuperQuadric();
+           
             dxfReaderNETControl1.DXF.VPorts["*Active"].ViewDirection = new Vector3(-Math.Sqrt(1 / (double)3), -Math.Sqrt(1 / (double)3), Math.Sqrt(1 / (double)3));
             dxfReaderNETControl1.Refresh();
             dxfReaderNETControl1.ZoomExtents();
@@ -173,13 +175,13 @@ namespace SuperQuadricCS
         {
             dxfReaderNETControl1.NewDrawing();
             dxfReaderNETControl1.Rendering = RenderingType.Shaded;
-        LoadRegistry();
+            LoadRegistry();
         }
 
         private void TextBoxCenterX_KeyPress(object sender, KeyPressEventArgs e)
         {
             ForceNumeric(sender, e);
-           
+
         }
         private void ForceNumeric(object sender, KeyPressEventArgs e)
         {
@@ -261,9 +263,9 @@ namespace SuperQuadricCS
             if (!mousedown && OnRotate)
             {
                 mousedown = true;
-                point1 = e.Location;
-                dxfReaderNETControl1.CustomCursor = CustomCursorType.None;
                 
+                dxfReaderNETControl1.CustomCursor = CustomCursorType.None;
+                orbitPointStart = dxfReaderNETControl1.CurrentWCSpoint;
             }
         }
 
@@ -271,9 +273,9 @@ namespace SuperQuadricCS
         {
             if (mousedown && OnRotate)
             {
-                point2 = e.Location;
-                this.BeginInvoke(new System.Windows.Forms.MethodInvoker(move3d));
+               
 
+                dxfReaderNETControl1.Orbit(dxfReaderNETControl1.CurrentWCSpoint, orbitPointStart);
             }
         }
 
@@ -283,78 +285,74 @@ namespace SuperQuadricCS
             {
                 mousedown = false;
                 OnRotate = false;
-                
+
             }
         }
-        private void move3d()
-        {
-            Vector2 p1 = Vector2.Zero;
-            Vector2 p2 = Vector2.Zero;
-            p1 = dxfReaderNETControl1.CoordsToWorld(point2.X, point2.Y);
-            p2 = dxfReaderNETControl1.CoordsToWorld(point1.X, point1.Y);
 
-            dxfReaderNETControl1.DXF.VPorts["*Active"].ViewDirection = new Vector3((p2 - p1).X, (p2 - p1).Y, (p2 - p1).Y - (p2 - p1).X);
-            dxfReaderNETControl1.Refresh();
+        private void buttonAbout_Click(object sender, EventArgs e)
+        {
+            dxfReaderNETControl1.About();
         }
+
         private void Button4_Click(object sender, EventArgs e)
         {
             DisplayView(PredefinedViewType.Top);
-           
+
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            DisplayView(PredefinedViewType.Bottom );
-            
+            DisplayView(PredefinedViewType.Bottom);
+
         }
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            DisplayView(PredefinedViewType.Left );
-            
+            DisplayView(PredefinedViewType.Left);
+
         }
 
         private void Button7_Click(object sender, EventArgs e)
         {
             DisplayView(PredefinedViewType.Right);
-          
+
         }
 
         private void Button8_Click(object sender, EventArgs e)
         {
             DisplayView(PredefinedViewType.Front);
-           
+
         }
 
         private void Button9_Click(object sender, EventArgs e)
         {
             DisplayView(PredefinedViewType.Back);
-            
+
         }
 
         private void Button10_Click(object sender, EventArgs e)
         {
-          
+
             DisplayView(PredefinedViewType.SW_Isometric);
-           
+
         }
 
         private void Button11_Click(object sender, EventArgs e)
         {
             DisplayView(PredefinedViewType.SE_Isometric);
-         
+
         }
 
         private void Button12_Click(object sender, EventArgs e)
         {
             DisplayView(PredefinedViewType.NE_Isometric);
-           
+
         }
 
         private void Button13_Click(object sender, EventArgs e)
         {
             DisplayView(PredefinedViewType.NW_Isometric);
-          
+
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -365,7 +363,7 @@ namespace SuperQuadricCS
         private void Button3_Click(object sender, EventArgs e)
         {
             {
-               
+
                 SaveFileDialog1.DefaultExt = "dxf";
                 SaveFileDialog1.Filter = "AutoCAD R10 DXF|*.dxf"; // 1
                 SaveFileDialog1.Filter += "|AutoCAD R11 and R12 DXF|*.dxf"; // 2
@@ -616,11 +614,15 @@ namespace SuperQuadricCS
         private Vector3 Superellipsoid(double eta, double omega)
         {
             Vector3 v = Vector3.Zero;
+
             v.X = a1 * elev(Math.Cos(eta), eps1) * elev(Math.Cos(omega), eps2);
             v.Y = a2 * elev(Math.Cos(eta), eps1) * elev(Math.Sin(omega), eps2);
             v.Z = a3 * elev(Math.Sin(eta), eps1);
             return v;
         }
+
+       
+
         private double elev(double x, double y)
         {
             double buf = 0;

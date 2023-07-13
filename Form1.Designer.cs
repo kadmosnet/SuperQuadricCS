@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             DXFReaderNET.DxfDocument dxfDocument1 = new DXFReaderNET.DxfDocument();
             DXFReaderNET.AciColor aciColor1 = new DXFReaderNET.AciColor();
             DXFReaderNET.Objects.RasterVariables rasterVariables1 = new DXFReaderNET.Objects.RasterVariables();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.SplitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.buttonAbout = new System.Windows.Forms.Button();
+            this.button18 = new System.Windows.Forms.Button();
             this.Button17 = new System.Windows.Forms.Button();
             this.Button16 = new System.Windows.Forms.Button();
             this.Button15 = new System.Windows.Forms.Button();
@@ -89,7 +91,6 @@
             this.Label6 = new System.Windows.Forms.Label();
             this.dxfReaderNETControl1 = new DXFReaderNET.DXFReaderNETControl();
             this.SaveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.button18 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer1)).BeginInit();
             this.SplitContainer1.Panel1.SuspendLayout();
             this.SplitContainer1.Panel2.SuspendLayout();
@@ -104,6 +105,7 @@
             // 
             // SplitContainer1.Panel1
             // 
+            this.SplitContainer1.Panel1.Controls.Add(this.buttonAbout);
             this.SplitContainer1.Panel1.Controls.Add(this.button18);
             this.SplitContainer1.Panel1.Controls.Add(this.Button17);
             this.SplitContainer1.Panel1.Controls.Add(this.Button16);
@@ -166,6 +168,27 @@
             this.SplitContainer1.Size = new System.Drawing.Size(1118, 642);
             this.SplitContainer1.SplitterDistance = 284;
             this.SplitContainer1.TabIndex = 1;
+            // 
+            // buttonAbout
+            // 
+            this.buttonAbout.Location = new System.Drawing.Point(79, 617);
+            this.buttonAbout.Name = "buttonAbout";
+            this.buttonAbout.Size = new System.Drawing.Size(163, 22);
+            this.buttonAbout.TabIndex = 50;
+            this.buttonAbout.Text = "About DXFReader.NET...";
+            this.buttonAbout.UseVisualStyleBackColor = true;
+            this.buttonAbout.Click += new System.EventHandler(this.buttonAbout_Click);
+            // 
+            // button18
+            // 
+            this.button18.AutoSize = true;
+            this.button18.Image = ((System.Drawing.Image)(resources.GetObject("button18.Image")));
+            this.button18.Location = new System.Drawing.Point(13, 601);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(38, 38);
+            this.button18.TabIndex = 49;
+            this.button18.UseVisualStyleBackColor = true;
+            this.button18.Click += new System.EventHandler(this.button18_Click);
             // 
             // Button17
             // 
@@ -383,7 +406,7 @@
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(230, 22);
             this.Button1.TabIndex = 29;
-            this.Button1.Text = "Generate SuperQadric";
+            this.Button1.Text = "Generate SuperQuadric";
             this.Button1.UseVisualStyleBackColor = true;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
@@ -725,7 +748,10 @@
             dxfDocument1.UserTimerDays = 0;
             this.dxfReaderNETControl1.DXF = dxfDocument1;
             this.dxfReaderNETControl1.FileName = null;
+            this.dxfReaderNETControl1.HighlightGrabPoints = false;
+            this.dxfReaderNETControl1.HighlightGrabPointsColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(163)))), ((int)(((byte)(0)))));
             this.dxfReaderNETControl1.HighlightMarkerColor2 = System.Drawing.Color.Magenta;
+            this.dxfReaderNETControl1.HighlightNotContinuous = false;
             this.dxfReaderNETControl1.Location = new System.Drawing.Point(0, 0);
             this.dxfReaderNETControl1.Name = "dxfReaderNETControl1";
             this.dxfReaderNETControl1.ShowAxes = false;
@@ -735,17 +761,6 @@
             this.dxfReaderNETControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dxfReaderNETControl1_MouseDown);
             this.dxfReaderNETControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dxfReaderNETControl1_MouseMove);
             this.dxfReaderNETControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dxfReaderNETControl1_MouseUp);
-            // 
-            // button18
-            // 
-            this.button18.AutoSize = true;
-            this.button18.Image = ((System.Drawing.Image)(resources.GetObject("button18.Image")));
-            this.button18.Location = new System.Drawing.Point(13, 601);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(38, 38);
-            this.button18.TabIndex = 49;
-            this.button18.UseVisualStyleBackColor = true;
-            this.button18.Click += new System.EventHandler(this.button18_Click);
             // 
             // Form1
             // 
@@ -828,6 +843,7 @@
         private DXFReaderNET.DXFReaderNETControl dxfReaderNETControl1;
         internal System.Windows.Forms.SaveFileDialog SaveFileDialog1;
         internal System.Windows.Forms.Button button18;
+        internal System.Windows.Forms.Button buttonAbout;
     }
 }
 
