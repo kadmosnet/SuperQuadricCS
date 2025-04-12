@@ -37,7 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DXFReaderNET">
-      <HintPath>..\..\..\..\..\..\DXFReader.NET Component\DXFReaderNET.dll</HintPath>
+      <HintPath>..\..\DXFReaderNETSetup\DXFReaderNET.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
